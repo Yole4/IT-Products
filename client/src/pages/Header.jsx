@@ -38,7 +38,7 @@ function Header() {
 
     return (
         <div>
-            <nav className="main-header navbar navbar-expand navbar-primary navbar-dark bg-navy">
+            <nav className="main-header navbar navbar-expand" style={{ background: 'none', color: 'black'}}>
                 {/* Left navbar links */}
                 <ul className="navbar-nav">
                     <li className="nav-item">
@@ -179,7 +179,7 @@ function Header() {
             {/* --------   PROFILE ---------- */}
             {isProfile && (
                 <div className="popup" onClick={() => setIsProfile(false)}>
-                    <div className="popup-body" onClick={(e) => e.stopPropagation()} style={{ animation: isProfile ? 'dropBottom .3s linear' : '' }}>
+                    <div className="popup-bodys" onClick={(e) => e.stopPropagation()} style={{ animation: isProfile ? 'dropBottoms .3s linear' : '' }}>
                         <div className="modal-close" onClick={() => setIsProfile(false)}>
                             <AiOutlineCloseCircle size={30} />
                         </div>

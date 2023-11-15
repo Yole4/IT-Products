@@ -21,6 +21,8 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import { FaAddressCard } from "react-icons/fa";
 import { GrProductHunt } from "react-icons/gr";
 import { FcShipped } from "react-icons/fc";
+import { IoMdNotificationsOutline } from "react-icons/io";
+import { FiShoppingCart } from "react-icons/fi";
 
 import { AuthContext } from '../../context/AuthContext';
 import { PublicContext } from '../../context/PublicContext';
@@ -261,9 +263,7 @@ function Home() {
 
   return (
     <>
-
-      <nav className="main-header navbar navbar-expand navbar-primary navbar-dark bg-navy" style={{ marginLeft: '0' }}>
-        {/* Left navbar links */}
+      <nav className="main-header navbar navbar-expand" style={{ marginLeft: '0', background: 'none', color: 'black' }}>
         <ul className="navbar-nav">
 
           <li className="nav-item">
@@ -275,10 +275,9 @@ function Home() {
           </li>
 
         </ul>
-        {/* Right navbar links */}
+
         <ul className="navbar-nav ml-auto">
 
-          {/* // ================================================================= NOTIFICATION =============================================================================== */}
           {isLogin && (
             <li className="nav-item dropdown">
               <a className="nav-link" data-toggle="dropdown" href="#">
@@ -381,19 +380,27 @@ function Home() {
         ))}
       </div>
 
-      <div className="gallery">
+      <div className="listProduct">
         {productListToSearch?.length === 0 ? (
           <div style={{ fontSize: '18px', width: 'auto', height: 'auto', background: '#fff', padding: '20px', borderRadius: '15px', color: 'red' }}>
             <span>No Pruduct Found!</span>
           </div>
         ) : (
           productListToSearch?.map(item => (
-            <div key={item.id} className="product-content" onClick={() => isLogin ? productButton(item) : setIsOpenLogin(true)}>
-              <img src={`${backendUrl}/${item.image}`} className='product-image' alt="" />
-              <h3 className='product-name'>{item.name}</h3>
+            <div key={item.id} className="item" style={{ textAlign: 'center' }}>
+              <img src={`${backendUrl}/${item.image}`} alt />
+              <h2 style={{ margin: '10px 0', fontSize: '25px' }}>{item.name}</h2>
+
               <div className="ammount" style={{ textAlign: 'left', marginLeft: '20px' }}>
-                <span>₱{item.prize}</span>
-                <ul style={{ display: 'flex', listStyle: 'none', marginLeft: '-40px' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <div style={{ display: 'flex', gap: '4px' }}>
+                    <span style={{ textDecoration: 'line-through', color: '#d2d2d2' }}>₱{item.discount}</span>
+                    <span> ₱{item.prize}</span>
+                  </div>
+                  <span>Stock: ₱{item.discount}</span>
+                </div>
+
+                <ul style={{ display: 'flex', listStyle: 'none', margin: '10px 0 10px -40px' }}>
                   <li><i className={item.ratings > 0 ? 'fa fa-star checked' : 'fa fa-star'}></i></li>
                   <li><i className={item.ratings > 1 ? 'fa fa-star checked' : 'fa fa-star'}></i></li>
                   <li><i className={item.ratings > 2 ? 'fa fa-star checked' : 'fa fa-star'}></i></li>
@@ -407,22 +414,18 @@ function Home() {
                   <li style={{ marginLeft: '10px', color: 'red' }}>{item.sold} Sold</li>
                 </ul>
               </div>
-              <div style={{ textAlign: 'left', marginLeft: '10px', fontSize: '15px', padding: '0px 15px 10px 10px' }}>
-                <span>{item.address}</span>
-              </div>
-              <div style={{ textAlign: 'left', marginBottom: '10px', marginLeft: '20px', fontSize: '13px', color: 'rgb(170, 146, 146)' }}>
-                <span>{item.date}</span>
-              </div>
+              <button onClick={() => isLogin ? productButton(item) : setIsOpenLogin(true)} className="addCart">Add to cart</button>
             </div>
           ))
         )}
       </div>
 
 
+
       {/* --------   PROFILE ---------- */}
       {isProfile && (
         <div className="popup" onClick={() => setIsProfile(false)}>
-          <div className="popup-body" onClick={(e) => e.stopPropagation()} style={{ animation: isProfile ? 'dropBottom .3s linear' : '' }}>
+          <div className="popup-bodys" onClick={(e) => e.stopPropagation()} style={{ animation: isProfile ? 'dropBottoms .3s linear' : '' }}>
             <div className="modal-close" onClick={() => setIsProfile(false)}>
               <AiOutlineCloseCircle size={30} />
             </div>
@@ -458,89 +461,91 @@ function Home() {
               <AiOutlineCloseCircle size={30} />
             </div>
             {/* <span style={{color: 'red'}}>Cart is Empty!</span> */}
-            <div style={{ marginBottom: '15px', fontWeight: 'bold' }}>
-              <span>My Cart</span>
-            </div>
-            <div style={{ display: 'flex', justifyContent: 'left', alignItems: 'start', gap: '8px' }}>
-              <input type="checkbox" onChange={handleToggleAllCheckboxes} style={{ height: '20px', width: '20px', cursor: 'pointer' }} />
-              <AiFillShop size={20} />
-              <span>{`${userCredentials?.first_name}'s`} Cart</span>
-              <div style={{ position: 'absolute', right: '20px', color: 'red' }}>
-                <span>Total: ₱{placeOrderData.totalAmount}</span>
+            <div style={{ minHeight: '94.7vh', overflow: 'auto' }}>
+              <div style={{ marginBottom: '15px', fontWeight: 'bold' }}>
+                <span>My Cart</span>
               </div>
-            </div>
-
-            {cartList?.length === 0 ? (
-              <div style={{ textAlign: 'center', padding: '15px' }}>
-                <span style={{ color: 'red' }}>Cart is Empty</span>
-              </div>
-            ) : (
-              cartList?.map((item) => (
-                <div key={item.id}>
-                  <hr />
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px', marginLeft: '10px' }}>
-                    <span style={{ color: 'red', fontSize: '15px' }}>
-                      <span style={{ textDecoration: 'line-through', color: '#d2d2d2' }}>₱{item.discount}</span>{' '}
-                      <span style={{ color: '' }}>₱{item.prize}</span>
-                    </span>
-                    <span style={{ fontSize: '15px' }}>{`₱${((quantityMap[item.id] || item.quantity) * item.prize).toFixed(2)}`}</span>
-                  </div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '8px', marginLeft: '10px' }}>
-                    <div style={{ display: 'flex', gap: '7px', justifyContent: 'center', alignItems: 'center' }}>
-                      <input
-                        type="checkbox"
-                        checked={isCheckedMap[item.id] || false}
-                        onChange={() => handleCheckboxChange(item.id)}
-                        style={{ height: '20px', width: '20px', cursor: 'pointer' }}
-                      />
-                      <img src={`${backendUrl}/${item.image}`} alt="" style={{ width: '50px', height: '50px' }} />
-                      <span>{item.name}</span>
-                    </div>
-
-                    <div style={{ display: 'flex' }}>
-                      <button
-                        onClick={() =>
-                          setQuantityMap((prev) => ({ ...prev, [item.id]: (prev[item.id] || item.quantity) - 1 }))
-                        }
-                        style={{ width: '40px', height: '40px', color: 'black', borderRadius: '50%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
-                      >
-                        <AiOutlineMinus />
-                      </button>
-                      <span
-                        style={{
-                          width: '40px',
-                          height: '40px',
-                          color: 'black',
-                          borderRadius: '50%',
-                          display: 'flex',
-                          justifyContent: 'center',
-                          alignItems: 'center',
-                          marginTop: '3px',
-                          padding: '2px',
-                        }}
-                      >
-                        {quantityMap[item.id] || item.quantity}
-                      </span>
-                      <button
-                        onClick={() =>
-                          setQuantityMap((prev) => ({ ...prev, [item.id]: (prev[item.id] || item.quantity) + 1 }))
-                        }
-                        style={{ width: '40px', height: '40px', color: 'black', borderRadius: '50%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
-                      >
-                        <AiOutlinePlus />
-                      </button>
-                    </div>
-
-                    <span>
-                      <RiDeleteBin6Line onClick={() => handleDeleteCart(item)} size={20} style={{ color: 'red', cursor: 'pointer' }} />
-                    </span>
-                  </div>
+              <div style={{ display: 'flex', justifyContent: 'left', alignItems: 'start', gap: '8px' }}>
+                <input type="checkbox" onChange={handleToggleAllCheckboxes} style={{ height: '20px', width: '20px', cursor: 'pointer' }} />
+                <AiFillShop size={20} />
+                <span>{`${userCredentials?.first_name}'s`} Cart</span>
+                <div style={{ position: 'absolute', right: '20px', color: 'red' }}>
+                  <span>Total: ₱{placeOrderData.totalAmount}</span>
                 </div>
-              ))
-            )}
+              </div>
 
-            <div style={{ marginTop: '15px' }}>
-              <button onClick={() => hasTrueValue ? setIsPlaceOrder(true) : alert("No Item Selected!")} style={{ borderRadius: '10px', fontSize: '20px', background: hasTrueValue ? 'orange' : '', padding: '5px' }}>Check Out</button>
+              {cartList?.length === 0 ? (
+                <div style={{ textAlign: 'center', padding: '15px' }}>
+                  <span style={{ color: 'red' }}>Cart is Empty</span>
+                </div>
+              ) : (
+                cartList?.map((item) => (
+                  <div key={item.id}>
+                    <hr />
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px', marginLeft: '10px' }}>
+                      <span style={{ color: 'red', fontSize: '15px' }}>
+                        <span style={{ textDecoration: 'line-through', color: '#d2d2d2' }}>₱{item.discount}</span>{' '}
+                        <span style={{ color: '' }}>₱{item.prize}</span>
+                      </span>
+                      <span style={{ fontSize: '15px' }}>{`₱${((quantityMap[item.id] || item.quantity) * item.prize).toFixed(2)}`}</span>
+                    </div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '8px', marginLeft: '10px' }}>
+                      <div style={{ display: 'flex', gap: '7px', justifyContent: 'center', alignItems: 'center' }}>
+                        <input
+                          type="checkbox"
+                          checked={isCheckedMap[item.id] || false}
+                          onChange={() => handleCheckboxChange(item.id)}
+                          style={{ height: '20px', width: '20px', cursor: 'pointer' }}
+                        />
+                        <img src={`${backendUrl}/${item.image}`} alt="" style={{ width: '50px', height: '50px' }} />
+                        <span>{item.name}</span>
+                      </div>
+
+                      <div style={{ display: 'flex' }}>
+                        <button
+                          onClick={() =>
+                            setQuantityMap((prev) => ({ ...prev, [item.id]: (prev[item.id] || item.quantity) - 1 }))
+                          }
+                          style={{ width: '40px', height: '40px', color: 'black', borderRadius: '50%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+                        >
+                          <AiOutlineMinus />
+                        </button>
+                        <span
+                          style={{
+                            width: '40px',
+                            height: '40px',
+                            color: 'black',
+                            borderRadius: '50%',
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            marginTop: '3px',
+                            padding: '2px',
+                          }}
+                        >
+                          {quantityMap[item.id] || item.quantity}
+                        </span>
+                        <button
+                          onClick={() =>
+                            setQuantityMap((prev) => ({ ...prev, [item.id]: (prev[item.id] || item.quantity) + 1 }))
+                          }
+                          style={{ width: '40px', height: '40px', color: 'black', borderRadius: '50%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+                        >
+                          <AiOutlinePlus />
+                        </button>
+                      </div>
+
+                      <span>
+                        <RiDeleteBin6Line onClick={() => handleDeleteCart(item)} size={20} style={{ color: 'red', cursor: 'pointer' }} />
+                      </span>
+                    </div>
+                  </div>
+                ))
+              )}
+
+              <div style={{ marginTop: '15px' }}>
+                <button onClick={() => hasTrueValue ? setIsPlaceOrder(true) : alert("No Item Selected!")} style={{ borderRadius: '10px', fontSize: '20px', background: hasTrueValue ? 'orange' : '', padding: '5px' }}>Check Out</button>
+              </div>
             </div>
           </div>
         </div>
@@ -550,45 +555,41 @@ function Home() {
       {isProductClick && (
         <div className="popup" onClick={() => { setIsProductClick(false); setAmmount(0); setQuantity(0) }}>
           <div className="popup-body" onClick={(e) => e.stopPropagation()} style={{ animation: isProductClick ? 'dropBottom .3s linear' : '' }}>
-            <div className="modal-close" onClick={() => setIsProductClick(false)} id='comments'>
-              <AiOutlineCloseCircle size={30} />
-            </div>
-            <div style={{ fontWeight: 'bold' }}>
-              <span>{eachProductInfo?.name}</span>
-            </div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '4px', fontSize: '13px', color: 'red' }}>
-              <span>Stock: {eachProductInfo?.stock}</span>
+            <div style={{ minHeight: '100vh', overflow: 'auto' }}>
+              <div className="modal-close" onClick={() => setIsProductClick(false)} id='comments'>
+                <AiOutlineCloseCircle size={30} />
+              </div>
+              <div style={{ fontWeight: 'bold' }}>
+                <span>{eachProductInfo?.name}</span>
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '4px', fontSize: '13px', color: 'red' }}>
+                <span>Stock: {eachProductInfo?.stock}</span>
+                {userCredentials?.user_type === "Customer" && (
+                  <div>
+                    <span>Ammount: </span>
+                    <span>₱{ammount}</span>
+                  </div>
+                )}
+              </div>
+              <div style={{ marginTop: '4px' }}>
+                {eachProductInfo?.description}
+              </div>
+
               {userCredentials?.user_type === "Customer" && (
-                <div>
-                  <span>Ammount: </span>
-                  <span>₱{ammount}</span>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <div style={{ display: 'flex' }}>
+                    <button onClick={() => setQuantity(quantity === 0 ? 0 : quantity - 1)} style={{ width: '40px', height: '40px', color: 'black', borderRadius: '50%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}><AiOutlineMinus /></button>
+                    <span style={{ width: '40px', height: '40px', color: 'black', borderRadius: '50%', display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '3px', padding: '2px' }}>{quantity}</span>
+                    <button onClick={() => setQuantity(quantity + 1)} style={{ width: '40px', height: '40px', color: 'black', borderRadius: '50%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}><AiOutlinePlus /></button>
+                  </div>
+                  <div>
+                    <button onClick={() => buttonAddToCart()} style={{ borderRadius: '20px', fontSize: '15px', width: '150px', padding: '8px', color: 'black', backgroundColor: quantity !== 0 ? 'orange' : '' }}>Add to cart</button>
+                  </div>
                 </div>
               )}
-            </div>
-            <div style={{ marginTop: '4px' }}>
-              {eachProductInfo?.description}
-            </div>
 
-            {userCredentials?.user_type === "Customer" && (
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <div style={{ display: 'flex' }}>
-                  <button onClick={() => setQuantity(quantity === 0 ? 0 : quantity - 1)} style={{ width: '40px', height: '40px', color: 'black', borderRadius: '50%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}><AiOutlineMinus /></button>
-                  <span style={{ width: '40px', height: '40px', color: 'black', borderRadius: '50%', display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '3px', padding: '2px' }}>{quantity}</span>
-                  <button onClick={() => setQuantity(quantity + 1)} style={{ width: '40px', height: '40px', color: 'black', borderRadius: '50%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}><AiOutlinePlus /></button>
-                </div>
-                <div>
-                  <button onClick={() => buttonAddToCart()} style={{ borderRadius: '20px', fontSize: '15px', width: '150px', padding: '8px', color: 'black', backgroundColor: quantity !== 0 ? 'orange' : '' }}>Add to cart</button>
-                </div>
-              </div>
-            )}
-
-            <div>
-              <button style={{ padding: '2px', marginTop: '10px', background: 'transparent', color: 'black', fontSize: '13px' }} onClick={() => setIsComments(isComments ? false : true)}>{isComments ? 'Show Less' : 'Show Comments'}</button>
-            </div>
-
-            {/* comments */}
-            {isComments && (
-              <div style={{ animation: isComments ? 'dropBottom .3s linear' : '' }}>
+              {/* comments */}
+              <div style={{ animation: isComments ? 'dropBottom .3s linear' : '', overflow: 'auto' }}>
                 <hr />
                 <div>
                   <span>Product Ratings and Comments</span>
@@ -596,7 +597,7 @@ function Home() {
                   {!commentsList || !commentsList.some(item => item.product_id === eachProductInfo.id) && (
                     <>
                       <hr />
-                      <div style={{textAlign: 'center', color: 'red', marginLeft: '-20px'}}>
+                      <div style={{ textAlign: 'center', color: 'red', marginLeft: '-20px' }}>
                         <span>No Comments Yet!</span>
                       </div>
                     </>
@@ -605,7 +606,7 @@ function Home() {
                   {commentsList?.map(item => item.product_id === eachProductInfo.id && (
                     <>
                       <hr />
-                      <div>
+                      <div style={{ overflow: 'auto' }}>
                         <div style={{ display: 'flex' }}>
                           <img src={item.given_image && item.given_image.length > 0 ? `${backendUrl}/${item.given_image}` : givenImage} style={{ width: '60px', height: '60px', borderRadius: '50%' }} alt="" />
                           <div style={{ display: 'flex', flexDirection: 'column', marginLeft: '10px' }}>
@@ -642,7 +643,7 @@ function Home() {
                   ))}
                 </div>
               </div>
-            )}
+            </div>
           </div>
 
         </div>
@@ -1009,7 +1010,7 @@ function Home() {
         <div onClick={() => setIsOpenLogin(false)} className='popup'>
 
           {/* Register page */}
-          <div onClick={(e) => e.stopPropagation()} className='popup-body' style={{ animation: isOpenLogin ? 'dropBottom .3s linear' : '' }} >
+          <div onClick={(e) => e.stopPropagation()} className='popup-bodys' style={{ animation: isOpenLogin ? 'dropBottoms .3s linear' : '' }} >
             <div style={{ textAlign: 'center' }}>
               <h3>Login</h3><br />
             </div>
@@ -1029,7 +1030,7 @@ function Home() {
               </div>
 
               <div style={{ marginTop: '20px' }}>
-                <input type="submit" style={{ width: '100%' }} className='btn btn-primary' value={isLoading ? "Loging in..." : "Login"} />
+                <input type="submit" style={{ width: '100%' }} className='btn btn-primary' value="Login" />
               </div>
 
             </form>
@@ -1049,7 +1050,7 @@ function Home() {
         <div onClick={() => setIsOpenRegister(false)} className='popup'>
 
           {/* Register page */}
-          <div onClick={(e) => e.stopPropagation()} className='popup-body' style={{ animation: isOpenRegister ? 'dropBottom .3s linear' : '' }} >
+          <div onClick={(e) => e.stopPropagation()} className='popup-bodys' style={{ animation: isOpenRegister ? 'dropBottoms .3s linear' : '' }} >
             <div style={{ textAlign: 'center' }}>
               <h3>Register</h3><br />
             </div>
@@ -1089,7 +1090,7 @@ function Home() {
               </div>
 
               <div style={{ marginTop: '20px' }}>
-                <input type="submit" style={{ width: '100%' }} className='btn btn-primary' value={isLoading ? "Registering..." : "Register"} />
+                <input type="submit" style={{ width: '100%' }} className='btn btn-primary' value="Register" />
               </div>
 
             </form>

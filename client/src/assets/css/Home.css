@@ -1,7 +1,7 @@
 body {
     margin: 0;
     font-family: sans-serif;
-    background: #404E5F;
+    background: whitesmoke;
 }
 
 .product-name {
@@ -107,6 +107,44 @@ button {
     border-bottom-left-radius: 20px;
 }
 
+
+.listProduct .item img{
+    width: 150px;
+    height: 150px;
+    /* filter: drop-shadow(0 50px 20px #0009); */
+}
+.listProduct{
+
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+    margin: 50px 0;
+    gap: 20px;
+}
+.listProduct .item{
+    background-color: #EEEEE6;
+    padding: 20px;
+    border-radius: 20px;
+}
+.listProduct .item h2{
+    font-weight: 500;
+    font-size: large;
+}
+.listProduct .item .price{
+    letter-spacing: 7px;
+    font-size: small;
+}
+.listProduct .item button{
+    background-color: #353432;
+    color: #eee;
+    border: none;
+    padding: 5px 10px;
+    margin-top: 10px;
+    border-radius: 20px;
+}
+
 .buy-1 {
     background: #2183a2;
 }
@@ -178,10 +216,21 @@ button {
 .popup-body {
     position: absolute;
     background: white;
-    border-radius: 8px 8px 0 0;
+    border-radius:2px;
     width: 430px;
     padding: 20px 20px;
-    max-height: 100%;
+    max-height: 100vh;
+    overflow-y: auto;
+    right: 0;
+}
+
+.popup-bodys {
+    position: absolute;
+    background: white;
+    border-radius:2px;
+    width: 430px;
+    padding: 20px 20px;
+    max-height: 100vh;
     overflow-y: auto;
 }
 
@@ -203,6 +252,16 @@ button {
 
 @keyframes dropBottom {
     0% {
+        transform: translateX(100%);
+    }
+
+    100% {
+        transform: translateX(0%);
+    }
+}
+
+@keyframes dropBottoms {
+    0% {
         transform: translateY(100%);
     }
 
@@ -210,6 +269,7 @@ button {
         transform: translateY(0%);
     }
 }
+
 
 .modal-pop-up-loading {
     position: fixed;
