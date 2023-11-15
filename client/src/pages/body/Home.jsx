@@ -3,11 +3,8 @@ import React, { useContext, useEffect, useState } from 'react';
 import '../../assets/css/Home.css';
 
 // images
-import image from '../../assets/images/archive-1.png';
-import mouse from '../../assets/images/mouse.jpeg';
-import computer from '../../assets/images/computer.png';
-import laptop from '../../assets/images/laptop.avif';
 import givenImage from '../../assets/images/given image.png';
+import logo from '../../assets/images/logo.png';
 
 import { useNavigate } from 'react-router-dom';
 
@@ -46,7 +43,8 @@ function Home() {
     isChangePassword, setIsChangePassword, changePasswordData, setChangePasswordData, handleChangePassword,
     isAddAddress, setIsAddAddress, addressData, setAddressData, handleAddAddress, isMyAddress, setIsMyAddress, myAddressList, placeOrderData, setPlaceOrderData,
     isPlaceOrder, setIsPlaceOrder, handlePlaceOrder, isCart, setIsCart, handleDeleteCart, isMyOrder, setIsMyOrder, myOrdersList, myNotifications,
-    feedbackData, setFeedbackData, handleAddFeedback, handleButtonFeedback, isRateMe, setIsRateMe, isSelectProduct, setIsSelectProduct, commentsList
+    feedbackData, setFeedbackData, handleAddFeedback, handleButtonFeedback, isRateMe, setIsRateMe, isSelectProduct, setIsSelectProduct, commentsList,
+    isEditProfileName, setIsEditProfileName, names, setNames, handleEditProfileName, eachComments, checkUpdate, setCheckUpdate
   } = useContext(AuthContext); // require auth context
 
   const { categoryList, publicLoading, productListToSearch, homeSearch, setHomeSearch } = useContext(PublicContext);
@@ -266,8 +264,8 @@ function Home() {
       <nav className="main-header navbar navbar-expand" style={{ marginLeft: '0', background: 'none', color: 'black' }}>
         <ul className="navbar-nav">
 
-          <li className="nav-item">
-            <a className="nav-link"><GrProductHunt size={20} /></a>
+          <li className="nav-item" style={{marginTop: '-7px'}}>
+            <a className="nav-link"><img src={logo} style={{width: '40px', height: '40px', borderRadius: '50%'}} alt="" /></a>
           </li>
 
           <li className="nav-item d-sm-inline-block" style={{ marginLeft: '-20px' }}>
@@ -446,12 +444,49 @@ function Home() {
               </div><br />
             </div>
             <hr />
-            <div className="form-control" style={{ textAlign: 'center' }}>
-              <span>Other profile view</span>
+
+            <div style={{ margin: '10px 10px 0px 10px' }}>
+              <button onClick={() => { setNames({ firstName: userCredentials.first_name, middleName: userCredentials.middle_name, lastName: userCredentials.last_name }); setIsEditProfileName(true) }} style={{ width: '100%', padding: '5px', borderRadius: '5px', fontSize: '17px', color: 'black' }}>Edit Profile</button>
             </div>
           </div>
         </div>
       )}
+
+      {/* Change profile info */}
+      {
+        isEditProfileName && (
+          <div className="popup">
+            <div className="popup-body student-body" onClick={(e) => e.stopPropagation()} style={{ top: '50%', left: '50%', transform: 'translate(-50%, -50%)', borderRadius: '5px', animation: isEditProfileName ? 'animateCenter 0.3s linear' : 'closeAnimateCenter 0.3s linear' }}>
+
+              <div className="popup-edit">
+                <span>Change Profile</span>
+              </div>
+              <hr />
+              <form onSubmit={handleEditProfileName}>
+                <div className='form-div'>
+                  <label htmlFor="">First Name</label>
+                  <input type="text" value={names.firstName} onChange={(e) => setNames((prev) => ({ ...prev, firstName: e.target.value }))} className='form-control' placeholder='First Name' required />
+                </div>
+
+                <div className='form-div'>
+                  <label htmlFor="">Middle Name</label>
+                  <input type="text" value={names.middleName} onChange={(e) => setNames((prev) => ({ ...prev, middleName: e.target.value }))} className='form-control' placeholder='Middle Name' required />
+                </div>
+
+                <div className='form-div'>
+                  <label htmlFor="">Last Name</label>
+                  <input type="text" value={names.lastName} onChange={(e) => setNames((prev) => ({ ...prev, lastName: e.target.value }))} className='form-control' placeholder='Last Name' required />
+                </div>
+
+                <div style={{ justifyContent: 'space-between', marginTop: '25px', display: 'flex' }}>
+                  <button className='btn btn-danger' type='button' style={{ width: '80px' }} onClick={() => setIsEditProfileName(false)}>Cancel</button>
+                  <button className='btn btn-primary' type='submit' style={{ width: '80px' }}>Save</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        )
+      }
 
       {/* --------   CART ---------- */}
       {isCart && (
@@ -911,12 +946,12 @@ function Home() {
           <div className="popup-body student-body" onClick={(e) => e.stopPropagation()} style={{ top: '50%', left: '50%', transform: 'translate(-50%, -50%)', borderRadius: '5px', animation: isRateMe ? 'animateCenter 0.3s linear' : 'closeAnimateCenter 0.3s linear' }}>
 
             <div className="popup-edit">
-              <h5>Feedback to (name of product)</h5>
+              <h5>Feedback to {feedbackData.productName}</h5>
             </div>
             <hr />
             <form onSubmit={handleAddFeedback}>
               <div className='form-group'>
-                <label htmlFor="name" className="control-label">Add Rate (1/10)</label>
+                <label htmlFor="name" className="control-label">{checkUpdate ? 'Update' : 'Add'} Rate (1/10)</label>
                 <select className='form-control form-control-border' value={feedbackData.ratings} onChange={(e) => setFeedbackData((prev) => ({ ...prev, ratings: e.target.value }))} required>
                   <option value="" selected disabled>Rate 1 out of 10</option>
                   <option value="1">1</option>
@@ -933,18 +968,74 @@ function Home() {
               </div>
 
               <div className="form-group">
-                <label htmlFor="name" className="control-label">Add Comments</label>
+                <label htmlFor="name" className="control-label">{checkUpdate ? 'Update' : 'Add'} Comments</label>
                 <textarea value={feedbackData.comments} onChange={(e) => setFeedbackData((prev) => ({ ...prev, comments: e.target.value }))} className="form-control form-control-border" placeholder="You Comment" id="" cols="30" rows="4"></textarea>
               </div>
 
-              <div style={{ justifyContent: 'space-between', marginTop: '25px', display: 'flex' }}>
+              {checkUpdate && (
+                <div style={{ margin: '-10px', padding: '0' }}>
+                  <button onClick={() => { setCheckUpdate(false); setFeedbackData((prev) => ({ ...prev, ratings: '' })); setFeedbackData((prev) => ({ ...prev, comments: '' })); }} style={{ fontSize: '12px', padding: '5px', borderRadius: '5px', background: 'transparent', color: 'darkblue' }}>Switch to add comment</button>
+                </div>
+              )}
+
+              <div style={{ justifyContent: 'space-between', marginTop: '10px', display: 'flex' }}>
                 <button className='btn btn-danger' type='button' style={{ width: '80px' }} onClick={() => setIsRateMe(false)}>Cancel</button>
-                <button className='btn btn-primary' type='submit' style={{ width: '80px' }}>Save</button>
+                <button className='btn btn-primary' type='submit' style={{ width: '80px' }}>{checkUpdate ? 'Update' : 'Add'}</button>
               </div>
-            </form>
-          </div>
-        </div>
-      )}
+
+              <div className="form-div" style={{ fontSize: '12px', marginTop: '25px' }} >
+
+                {eachComments && eachComments.length === 0 ? (
+                  <span></span>
+                ) : (
+                  <table className="table table-hover table-striped">
+                    <thead>
+                      <tr>
+                        <th>Ratings</th>
+                        <th>Comments</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+
+                    <tbody>
+                      {
+                        eachComments && eachComments.map((item, index) => (
+                          <tr key={item.id}>
+                            <td>
+                              <div style={{ display: 'flex', listStyle: 'none', fontSize: '10px' }}>
+                                <li><i className={item.ratings > 0 ? 'fa fa-star checked' : 'fa fa-star'}></i></li>
+                                <li><i className={item.ratings > 1 ? 'fa fa-star checked' : 'fa fa-star'}></i></li>
+                                <li><i className={item.ratings > 2 ? 'fa fa-star checked' : 'fa fa-star'}></i></li>
+                                <li><i className={item.ratings > 3 ? 'fa fa-star checked' : 'fa fa-star'}></i></li>
+                                <li><i className={item.ratings > 4 ? 'fa fa-star checked' : 'fa fa-star'}></i></li>
+                                <li><i className={item.ratings > 5 ? 'fa fa-star checked' : 'fa fa-star'}></i></li>
+                                <li><i className={item.ratings > 6 ? 'fa fa-star checked' : 'fa fa-star'}></i></li>
+                                <li><i className={item.ratings > 7 ? 'fa fa-star checked' : 'fa fa-star'}></i></li>
+                                <li><i className={item.ratings > 8 ? 'fa fa-star checked' : 'fa fa-star'}></i></li>
+                                <li><i className={item.ratings > 9 ? 'fa fa-star checked' : 'fa fa-star'}></i></li>
+                              </div>
+                            </td>
+                            <td>{item.comments}</td>
+                            <td style={{ textAlign: 'center' }}>
+                              <div style={{ display: 'flex', gap: '5px' }}>
+                                <a href="#" onClick={() => { setCheckUpdate(true); setFeedbackData((prev) => ({ ...prev, ratings: item.ratings })); setFeedbackData((prev) => ({ ...prev, productId: item.product_id })); setFeedbackData((prev) => ({ ...prev, comments: item.comments })); setFeedbackData((prev) => ({ ...prev, updateCommentId: item.id })); }}><span className="fa fa-edit text-primary" /> </a>
+                                <div className="dropdown-divider" />
+                                <a href="#" ><span className="fa fa-trash text-danger" /> </a>
+                              </div>
+                            </td>
+                          </tr>
+                        ))
+                      }
+                    </tbody>
+                  </table>
+                )}
+
+              </div >
+            </form >
+          </div >
+        </div >
+      )
+      }
 
       {/* Change Password */}
       {isChangePassword && (

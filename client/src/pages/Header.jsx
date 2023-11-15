@@ -3,6 +3,7 @@ import axios from 'axios';
 
 // images
 import givenImage from '../assets/images/given image.png';
+import logo from '../assets/images/logo.png';
 
 // react icons  
 import { AiTwotoneHome, AiOutlineCloseCircle } from "react-icons/ai";
@@ -18,7 +19,7 @@ function Header() {
     const navigate = useNavigate();
 
     const { logoutUser, isLogout, setIsLogout, isLoading, errorResponse, userCredentials, changePasswordData, setChangePasswordData, isChangePassword, setIsChangePassword,
-        updateProfile, handleChangePassword, myNotifications
+        updateProfile, handleChangePassword, myNotifications, isEditProfileName, setIsEditProfileName, handleEditProfileName, names, setNames
     } = useContext(AuthContext);
 
     const { publicLoading } = useContext(PublicContext);
@@ -38,14 +39,15 @@ function Header() {
 
     return (
         <div>
-            <nav className="main-header navbar navbar-expand" style={{ background: 'none', color: 'black'}}>
+            <nav className="main-header navbar navbar-expand" style={{ background: 'none', color: 'black' }}>
                 {/* Left navbar links */}
                 <ul className="navbar-nav">
-                    <li className="nav-item">
-                        <a className="nav-link" data-widget="pushmenu" href="#" role="button"><i className="fas fa-bars" /></a>
+                    <li className="nav-item" style={{ marginTop: '-7px' }}>
+                        <a className="nav-link"><img src={logo} style={{ width: '40px', height: '40px', borderRadius: '50%' }} alt="" /></a>
                     </li>
-                    <li className="nav-item d-none d-sm-inline-block" >
-                        <span style={{ cursor: 'pointer' }} className="nav-link" onClick={() => navigate('/')}>Online IT Products</span>
+
+                    <li className="nav-item d-sm-inline-block" style={{ marginLeft: '-20px' }}>
+                        <span style={{ cursor: 'pointer' }} onClick={() => navigate('/')} className="nav-link">IT Products</span>
                     </li>
                 </ul>
                 {/* Right navbar links */}
@@ -200,9 +202,43 @@ function Header() {
                             </div><br />
                         </div>
                         <hr />
-                        <div className="form-control" style={{ textAlign: 'center' }}>
-                            <span>Other profile view</span>
+                        <div style={{ margin: '10px 10px 0px 10px' }}>
+                            <button onClick={() => { setNames({ firstName: userCredentials.first_name, middleName: userCredentials.middle_name, lastName: userCredentials.last_name }); setIsEditProfileName(true) }} style={{ width: '100%', padding: '5px', borderRadius: '5px', fontSize: '17px', color: 'black' }}>Edit Profile</button>
                         </div>
+                    </div>
+                </div>
+            )}
+
+            {/* Change profile info */}
+            {isEditProfileName && (
+                <div className="popup">
+                    <div className="popup-body student-body" onClick={(e) => e.stopPropagation()} style={{ top: '50%', left: '50%', transform: 'translate(-50%, -50%)', borderRadius: '5px', animation: isEditProfileName ? 'animateCenter 0.3s linear' : 'closeAnimateCenter 0.3s linear' }}>
+
+                        <div className="popup-edit">
+                            <span>Change Profile</span>
+                        </div>
+                        <hr />
+                        <form onSubmit={handleEditProfileName}>
+                            <div className='form-div'>
+                                <label htmlFor="">First Name</label>
+                                <input type="text" value={names.firstName} onChange={(e) => setNames((prev) => ({ ...prev, firstName: e.target.value }))} className='form-control' placeholder='First Name' required />
+                            </div>
+
+                            <div className='form-div'>
+                                <label htmlFor="">Middle Name</label>
+                                <input type="text" value={names.middleName} onChange={(e) => setNames((prev) => ({ ...prev, middleName: e.target.value }))} className='form-control' placeholder='Middle Name' required />
+                            </div>
+
+                            <div className='form-div'>
+                                <label htmlFor="">Last Name</label>
+                                <input type="text" value={names.lastName} onChange={(e) => setNames((prev) => ({ ...prev, lastName: e.target.value }))} className='form-control' placeholder='Last Name' required />
+                            </div>
+
+                            <div style={{ justifyContent: 'space-between', marginTop: '25px', display: 'flex' }}>
+                                <button className='btn btn-danger' type='button' style={{ width: '80px' }} onClick={() => setIsEditProfileName(false)}>Cancel</button>
+                                <button className='btn btn-primary' type='submit' style={{ width: '80px' }}>Save</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             )}
