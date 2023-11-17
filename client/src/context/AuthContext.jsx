@@ -31,14 +31,10 @@ export const AuthContextProvider = ({ children }) => {
         setUser(JSON.parse(user));
     }, []);
 
-    const updateRegisterInfo = useCallback((info) => {
-        setRegisterInfo(info);
-    }, []);
-
     // -------------------------------------    REGISTER    ---------------------------------------------
     const [isOpenRegister, setIsOpenRegister] = useState(false);
 
-    const registerUser = useCallback(async (e) => {
+    const registerUser = async (e) => {
         e.preventDefault();
 
         setIsLoading(true);
@@ -61,11 +57,20 @@ export const AuthContextProvider = ({ children }) => {
         if (response.error) {
             setErrorResponse({ message: response.message, isError: true });
         } else {
+            setRegisterInfo({
+                firstName: '',
+                middleName: '',
+                lastName: '',
+                username: '',
+                password: '',
+                confirmPassword: ''
+            });
             localStorage.setItem("token", JSON.stringify(response.token));
             setUser(response.token);
             setErrorResponse({ message: response.message, isError: false });
+            navigate('/');
         }
-    }, [registerInfo]);
+    };
 
     // -------------------------------------   LOGOUT  --------------------------------------------
     const [isLogout, setIsLogout] = useState(false);
@@ -86,34 +91,40 @@ export const AuthContextProvider = ({ children }) => {
     });
     const [isOpenLogin, setIsOpenLogin] = useState(false);
 
-    const updateLoginInfo = useCallback((info) => {
-        setLoginInfo(info);
-    }, []);
-
-    const handleLogin = useCallback(async (e) => {
+    const handleLogin = async (e) => {
         e.preventDefault();
 
-        setIsLoading(true);
+        // setIsLoading(true);
         setErrorResponse(null);
 
         const username = loginInfo.username;
         const password = loginInfo.password;
         const data = { username, password };
 
-        const response = await postRequest(`${baseUrl}/users/login`, data);
+        try {
+            const response = await postRequest(`${baseUrl}/users/login`, data);
 
-        setIsLoading(false);
-        setIsOpenLogin(false);
-        setMount(mount ? false : true);
+            setIsLoading(false);
+            setIsOpenLogin(false);
+            setMount(mount ? false : true);
 
-        if (response.error) {
-            setErrorResponse({ message: response.message, isError: true });
-        } else {
-            localStorage.setItem("token", JSON.stringify(response.token));
-            setUser(response.token);
-            setErrorResponse({ message: response.message, isError: false });
+            if (response.error) {
+                setErrorResponse({ message: response.message, isError: true });
+            } else {
+                setLoginInfo({
+                    username: "",
+                    password: ""
+                });
+                localStorage.setItem("token", JSON.stringify(response.token));
+                setUser(response.token);
+                setErrorResponse({ message: response.message, isError: false });
+                navigate('/');
+            }
+        } catch (error) {
+            console.log("Error", error);
+            setIsLoading(false);
         }
-    }, [loginInfo]);
+    }
 
     // ------------------------------------ PROTECTED   -------------------------------------------
     const token = user;
@@ -720,13 +731,13 @@ export const AuthContextProvider = ({ children }) => {
     return <AuthContext.Provider value={{
         user,
         registerInfo,
-        updateRegisterInfo,
+        setRegisterInfo,
         registerUser,
         errorResponse,
         isLoading,
         logoutUser,
         loginInfo,
-        updateLoginInfo,
+        setLoginInfo,
         handleLogin,
         isOpenLogin,
         setIsOpenLogin,

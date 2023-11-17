@@ -24,6 +24,7 @@ import { FiShoppingCart } from "react-icons/fi";
 import { AuthContext } from '../../context/AuthContext';
 import { PublicContext } from '../../context/PublicContext';
 import { backendUrl } from '../../utils/Services';
+import { AdminContext } from '../../context/AdminContext';
 
 function Home() {
   const navigate = useNavigate();
@@ -48,6 +49,8 @@ function Home() {
   } = useContext(AuthContext); // require auth context
 
   const { categoryList, publicLoading, productListToSearch, homeSearch, setHomeSearch } = useContext(PublicContext);
+
+  const {settingsData} = useContext(AdminContext);
 
   const [isErrorResponse, setIsErrorResponse] = useState(false);
 
@@ -265,11 +268,11 @@ function Home() {
         <ul className="navbar-nav">
 
           <li className="nav-item" style={{marginTop: '-7px'}}>
-            <a className="nav-link"><img src={logo} style={{width: '40px', height: '40px', borderRadius: '50%'}} alt="" /></a>
+            <a className="nav-link"><img src={settingsData && `${backendUrl}/${settingsData.image}`} style={{width: '40px', height: '40px', borderRadius: '50%'}} alt="" /></a>
           </li>
 
           <li className="nav-item d-sm-inline-block" style={{ marginLeft: '-20px' }}>
-            <span style={{ cursor: 'pointer' }} className="nav-link">IT Products</span>
+            <span style={{ cursor: 'pointer' }} className="nav-link">{settingsData && settingsData.title}</span>
           </li>
 
         </ul>
@@ -279,7 +282,7 @@ function Home() {
           {isLogin && (
             <li className="nav-item dropdown">
               <a className="nav-link" data-toggle="dropdown" href="#">
-                <i className="far fa-bell" />
+                <i className="far fa-bell" style={{color: 'black'}}/>
                 <span className="badge badge-warning navbar-badge">{myNotifications?.length === 0 ? '' : myNotifications?.length}</span>
               </a>
               <div className="dropdown-menu dropdown-menu-lg dropdown-menu-right notificationAlign">
@@ -317,7 +320,7 @@ function Home() {
           {isLogin && (
             <li className="nav-item dropdown no-arrow">
               <a className="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span className="mr-2 d-none d-lg-inline text-gray-600 small">{userCredentials && `${userCredentials.first_name} ${userCredentials.middle_name} ${userCredentials.last_name}`}</span>
+                <span className="mr-2 d-none d-lg-inline text-gray-600 small" style={{color: 'black'}}>{userCredentials && `${userCredentials.first_name} ${userCredentials.middle_name} ${userCredentials.last_name}`}</span>
                 <img style={{ width: 25, height: 25 }} className="img-profile rounded-circle" src={userCredentials && userCredentials.given_image ? `${backendUrl}/${userCredentials.given_image}` : givenImage} />
               </a>
 
@@ -352,9 +355,9 @@ function Home() {
           )}
 
           {!isLogin && (
-            <li className="nav-item dropdown" onClick={(e) => { e.stopPropagation(); setIsOpenLogin(true) }}>
+            <li className="nav-item dropdown" onClick={(e) => { e.stopPropagation(); navigate('/login') }}>
               <a className="nav-link" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span className="mr-2 d-none d-lg-inline text-gray-600 small">Login/Register</span>
+                <span className="mr-2 d-none d-lg-inline text-gray-600 small" style={{color: 'black'}}>Login/Register</span>
                 <BsPersonCircle style={{ cursor: 'pointer' }} size={20} />
               </a>
             </li>
@@ -1092,102 +1095,6 @@ function Home() {
             <div style={{ justifyContent: 'space-between', marginTop: '25px', display: 'flex' }}>
               <button className='btn btn-danger' type='button' style={{ width: '80px' }} onClick={() => setIsLogout(false)}>No</button>
               <button className='btn btn-primary' type='submit' style={{ width: '80px' }} onClick={() => { logoutUser() }}>Yes</button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {isOpenLogin && !isOpenRegister && (
-        <div onClick={() => setIsOpenLogin(false)} className='popup'>
-
-          {/* Register page */}
-          <div onClick={(e) => e.stopPropagation()} className='popup-bodys' style={{ animation: isOpenLogin ? 'dropBottoms .3s linear' : '' }} >
-            <div style={{ textAlign: 'center' }}>
-              <h3>Login</h3><br />
-            </div>
-            <div className="modal-close" onClick={() => setIsOpenLogin(false)}>
-              <AiOutlineCloseCircle size={30} />
-            </div>
-
-            <form onSubmit={handleLogin}>
-              <div className='form-div'>
-                <label htmlFor="">Username</label>
-                <input type="text" value={updateLoginInfo.username} onChange={(e) => updateLoginInfo({ ...loginInfo, username: e.target.value })} className='form-control' placeholder='Username' required />
-              </div>
-
-              <div style={{ marginTop: '20px' }}>
-                <label htmlFor="">Password</label>
-                <input type="password" value={updateLoginInfo.password} onChange={(e) => updateLoginInfo({ ...loginInfo, password: e.target.value })} className='form-control' placeholder='*********' required />
-              </div>
-
-              <div style={{ marginTop: '20px' }}>
-                <input type="submit" style={{ width: '100%' }} className='btn btn-primary' value="Login" />
-              </div>
-
-            </form>
-            <div style={{ marginTop: '10px', textAlign: 'center' }} className='forgot-password'>
-              <span>Forgot Password?</span>
-            </div>
-
-            <div style={{ textAlign: 'center', marginTop: '10px' }}>
-              <span>Don't Have Account? <a style={{ textDecoration: 'underline', cursor: 'pointer', color: 'blue' }} onClick={() => { setIsOpenRegister(true); setIsOpenLogin(false) }} >Register</a></span>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Register page */}
-      {isOpenRegister && !isOpenLogin && (
-        <div onClick={() => setIsOpenRegister(false)} className='popup'>
-
-          {/* Register page */}
-          <div onClick={(e) => e.stopPropagation()} className='popup-bodys' style={{ animation: isOpenRegister ? 'dropBottoms .3s linear' : '' }} >
-            <div style={{ textAlign: 'center' }}>
-              <h3>Register</h3><br />
-            </div>
-            <div className="modal-close" onClick={() => setIsOpenRegister(false)}>
-              <AiOutlineCloseCircle size={30} />
-            </div>
-
-            <form onSubmit={registerUser}>
-              <div className='form-div'>
-                <label htmlFor="">First Name</label>
-                <input type="text" className='form-control' value={updateRegisterInfo.firstName} onChange={(e) => updateRegisterInfo({ ...registerInfo, firstName: e.target.value })} placeholder='First Name' required />
-              </div>
-
-              <div style={{ marginTop: '20px' }}>
-                <label htmlFor="">Middle Name (Optional)</label>
-                <input type="text" className='form-control' value={updateRegisterInfo.middleName} onChange={(e) => updateRegisterInfo({ ...registerInfo, middleName: e.target.value })} placeholder='Middle Name' />
-              </div>
-
-              <div style={{ marginTop: '20px' }}>
-                <label htmlFor="">Last Name</label>
-                <input type="text" className='form-control' value={updateRegisterInfo.lastName} onChange={(e) => updateRegisterInfo({ ...registerInfo, lastName: e.target.value })} placeholder='Last Name' required />
-              </div>
-
-              <div style={{ marginTop: '20px' }}>
-                <label htmlFor="">Username</label>
-                <input type="text" className='form-control' value={updateRegisterInfo.username} onChange={(e) => updateRegisterInfo({ ...registerInfo, username: e.target.value })} placeholder='Username' required />
-              </div>
-
-              <div style={{ marginTop: '20px' }}>
-                <label htmlFor="">Password</label>
-                <input type="password" className='form-control' value={updateRegisterInfo.password} onChange={(e) => updateRegisterInfo({ ...registerInfo, password: e.target.value })} placeholder='*********' required />
-              </div>
-
-              <div style={{ marginTop: '20px' }}>
-                <label htmlFor="">Confirm Password</label>
-                <input type="password" className='form-control' value={updateRegisterInfo.confirmPassword} onChange={(e) => updateRegisterInfo({ ...registerInfo, confirmPassword: e.target.value })} placeholder='*********' required />
-              </div>
-
-              <div style={{ marginTop: '20px' }}>
-                <input type="submit" style={{ width: '100%' }} className='btn btn-primary' value="Register" />
-              </div>
-
-            </form>
-
-            <div style={{ textAlign: 'center', marginTop: '10px' }}>
-              <span>Already have account? <a style={{ textDecoration: 'underline', cursor: 'pointer', color: 'blue' }} onClick={() => { setIsOpenLogin(true); setIsOpenRegister(false) }} >Login</a></span>
             </div>
           </div>
         </div>

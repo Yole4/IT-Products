@@ -15,12 +15,15 @@ import givenImage from '../assets/images/given image.png';
 import logo from '../assets/images/logo.png';
 import { useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
+import { AdminContext } from '../context/AdminContext';
+import { backendUrl } from '../utils/Services';
 
 function SideBar() {
     const location = useLocation();
     const navigate = useNavigate();
 
-    const {isLoading, userCredentials} = useContext(AuthContext);
+    const { userCredentials } = useContext(AuthContext);
+    const {settingsData, isLoading, isSettings, setIsSettings, updateSettingsData, setUpdateSettingsData, handleUpdateSettings} = useContext(AdminContext)
 
     return (
         <div>
@@ -28,7 +31,7 @@ function SideBar() {
                 <i className='fas fa-times close-button' data-widget="pushmenu" style={{ position: 'absolute', top: '17px', right: '20px', fontSize: '27px' }} href="#" role="button"></i>
                 {/* Brand Logo */}
                 <span className="brand-link span-cursor" style={{ width: '190px' }}>
-                    <img src={logo} alt="AdminLTE Logo" className="brand-image img-circle elevation-3" style={{ opacity: '.8' }} />
+                    <img src={settingsData ? `${backendUrl}/${settingsData.image}` : logo} alt="AdminLTE Logo" className="brand-image img-circle elevation-3" style={{ opacity: '.8' }} />
                     <span className="brand-text font-weight-light">Admin</span>
                 </span>
                 {/* Sidebar */}
@@ -97,7 +100,7 @@ function SideBar() {
                                 </a>
                             </li>
 
-                            <li className="nav-item dropdown" style={{ cursor: 'pointer' }} >
+                            <li className="nav-item dropdown" style={{ cursor: 'pointer' }} onClick={() => setIsSettings(true)}>
                                 <a className={location.pathname === '/settings' ? 'nav-link nav-home hover-side' : 'nav-link nav-home'}>
                                     <i className="nav-icon"><IoSettingsOutline /></i>
                                     <p style={{ marginLeft: '10px' }}>
@@ -109,6 +112,35 @@ function SideBar() {
                     </nav>
                 </div>
             </aside>
+
+            {/* Change profile info */}
+            {isSettings && (
+                <div className="popup">
+                    <div className="popup-body student-body" onClick={(e) => e.stopPropagation()} style={{ top: '50%', left: '50%', transform: 'translate(-50%, -50%)', borderRadius: '5px', animation: isSettings ? 'animateCenter 0.3s linear' : 'closeAnimateCenter 0.3s linear' }}>
+
+                        <div className="popup-edit">
+                            <span>Change System Info</span>
+                        </div>
+                        <hr />
+                        <form onSubmit={handleUpdateSettings}>
+                            <div className='form-div'>
+                                <label htmlFor="">System Logo</label>
+                                <input type="file" onChange={(e) => setUpdateSettingsData((prev) => ({ ...prev, image: e.target.files[0] }))} className='form-control' required />
+                            </div>
+
+                            <div className='form-div' style={{marginTop: '10px'}}>
+                                <label htmlFor="">System Name</label>
+                                <input type="text" value={updateSettingsData.title} onChange={(e) => setUpdateSettingsData((prev) => ({ ...prev, title: e.target.value }))} className='form-control' placeholder='System Name' required />
+                            </div>
+
+                            <div style={{ justifyContent: 'space-between', marginTop: '25px', display: 'flex' }}>
+                                <button className='btn btn-danger' type='button' style={{ width: '80px' }} onClick={() => setIsSettings(false)}>Cancel</button>
+                                <button className='btn btn-primary' type='submit' style={{ width: '80px' }}>Update</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            )}
 
             {/* fetching data screen */}
             {isLoading && (

@@ -12,6 +12,7 @@ import Categories from './pages/body/Categories';
 import Undefine from './pages/404/Undefine';
 import Products from './pages/body/Products';
 import Orders from './pages/body/Orders';
+import Login from './pages/Login';
 
 function App() {
   const {user} = useContext(AuthContext);
@@ -20,11 +21,13 @@ function App() {
 
     <Routes>
       <Route path="/" element={<Home /> } />
+      {/* <Route path="/login" element={<Login /> } /> */}
       <Route path="/dashboard" element={user? <Dashboard /> : <Navigate to="/" replace /> } />
       <Route path="/users" element={user? <UsersList /> : <Navigate to="/" replace /> } />
       <Route path="/categories" element={user? <Categories /> : <Navigate to="/" replace /> } />
       <Route path="/products" element={user? <Products /> : <Navigate to="/" replace /> } />
       <Route path="/orders" element={user? <Orders /> : <Navigate to="/" replace /> } />
+      <Route path="/login" element={user? <Home /> : <Login /> } />
 
       <Route path="*" element={<Undefine />} />
     </Routes>
