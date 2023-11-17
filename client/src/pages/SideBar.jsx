@@ -13,10 +13,14 @@ import { FaBoxesStacked } from "react-icons/fa6";
 // images
 import givenImage from '../assets/images/given image.png';
 import logo from '../assets/images/logo.png';
+import { useContext } from 'react';
+import { AuthContext } from '../context/AuthContext';
 
 function SideBar() {
     const location = useLocation();
     const navigate = useNavigate();
+
+    const {isLoading, userCredentials} = useContext(AuthContext);
 
     return (
         <div>
@@ -35,7 +39,7 @@ function SideBar() {
                             <img style={{ width: 34, height: 34 }} src={givenImage} className="img-profile rounded-circle" />
                         </div>
                         <div className="info">
-                            <a href="#" className="d-block" data-toggle="modal" data-target="#profile" style={{ cursor: 'pointer' }}>Shelo Mora Paglinawan</a>
+                            <a href="#" className="d-block" data-toggle="modal" data-target="#profile" style={{ cursor: 'pointer' }}>{userCredentials && `${userCredentials.first_name} ${userCredentials.middle_name} ${userCredentials.last_name}`}</a>
                         </div>
                     </div>
                     {/* Sidebar Menu */}
@@ -107,14 +111,14 @@ function SideBar() {
             </aside>
 
             {/* fetching data screen */}
-            {/* {isLoading && (
+            {isLoading && (
                 <div className="popup">
                     <div className="modal-pop-up-loading">
                         <div className="modal-pop-up-loading-spiner"></div>
                         <p>Loading...</p>
                     </div>
                 </div>
-            )} */}
+            )}
         </div>
     )
 }

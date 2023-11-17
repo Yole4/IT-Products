@@ -395,10 +395,10 @@ function Home() {
                     <span style={{ textDecoration: 'line-through', color: '#d2d2d2' }}>₱{item.discount}</span>
                     <span> ₱{item.prize}</span>
                   </div>
-                  <span>Stock: ₱{item.discount}</span>
+                  <span style={{color: 'red', fontSize: '15px'}}>Stock: ₱{item.discount}</span>
                 </div>
 
-                <ul style={{ display: 'flex', listStyle: 'none', margin: '10px 0 10px -40px' }}>
+                <ul style={{ display: 'flex', listStyle: 'none', margin: '10px 0 10px -40px', fontSize: '18px'}}>
                   <li><i className={item.ratings > 0 ? 'fa fa-star checked' : 'fa fa-star'}></i></li>
                   <li><i className={item.ratings > 1 ? 'fa fa-star checked' : 'fa fa-star'}></i></li>
                   <li><i className={item.ratings > 2 ? 'fa fa-star checked' : 'fa fa-star'}></i></li>
