@@ -25,7 +25,7 @@ function Header() {
 
     const { publicLoading } = useContext(PublicContext);
 
-    const {settingsData} = useContext(AdminContext);
+    const { settingsData } = useContext(AdminContext);
 
     const [isErrorResponse, setIsErrorResponse] = useState(false);
     const [isProfile, setIsProfile] = useState(false);
@@ -45,8 +45,8 @@ function Header() {
             <nav className="main-header navbar navbar-expand" style={{ background: 'none', color: 'black' }}>
                 {/* Left navbar links */}
                 <ul className="navbar-nav">
-                    <li className="nav-item" style={{ marginTop: '-7px' }}>
-                        <a className="nav-link"><img src={logo} style={{ width: '40px', height: '40px', borderRadius: '50%' }} alt="" /></a>
+                    <li className="nav-item">
+                        <a className="nav-link" data-widget="pushmenu" href="#" role="button"><i className="fas fa-bars" /></a>
                     </li>
 
                     <li className="nav-item d-sm-inline-block" style={{ marginLeft: '-20px' }}>
