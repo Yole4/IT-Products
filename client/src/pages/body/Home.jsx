@@ -309,7 +309,7 @@ function Home() {
           )}
 
           {userCredentials?.user_type === "Customer" && (
-            <li className="nav-item dropdown" onClick={() => isLogin ? setIsCart(true) : setIsOpenLogin(true)}>
+            <li className="nav-item dropdown" onClick={() => isLogin ? setIsCart(true) : navigate('/login')}>
               <div className="nav-link">
                 <LuShoppingCart style={{ cursor: 'pointer' }} size={20} />
                 <span className="badge badge-warning navbar-badge">{cartList?.length === 0 ? '' : cartList?.length}</span>
@@ -415,7 +415,7 @@ function Home() {
                   <li style={{ marginLeft: '10px', color: 'red' }}>{item.sold} Sold</li>
                 </ul>
               </div>
-              <button onClick={() => isLogin ? productButton(item) : setIsOpenLogin(true)} className="addCart">Add to cart</button>
+              <button onClick={() => isLogin ? productButton(item) : navigate('/login')} className="addCart">Add to cart</button>
             </div>
           ))
         )}

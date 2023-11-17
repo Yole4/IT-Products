@@ -503,9 +503,9 @@ export const AdminContextProvider = ({ children }) => {
 
             setIsLoading(false);
 
-            if (response.error){
+            if (response.error) {
                 setErrorResponse({ message: response.message, isError: true });
-            }else{
+            } else {
                 setIsSettings(false);
                 setSettingsMount(settingsMount ? false : true);
                 setErrorResponse({ message: response.message, isError: false });
@@ -520,31 +520,29 @@ export const AdminContextProvider = ({ children }) => {
     const [settingsData, setSettingsData] = useState(null);
 
     useEffect(() => {
-        if (userId) {
-            const fetcHSettings = async () => {
-                setIsLoading(true);
-                setErrorResponse(null);
+        const fetcHSettings = async () => {
+            setIsLoading(true);
+            setErrorResponse(null);
 
-                try {
-                    const response = await getRequest(`${baseUrl}/admin/fetch-settings`);
+            try {
+                const response = await getRequest(`${baseUrl}/admin/fetch-settings`);
 
-                    setIsLoading(false);
+                setIsLoading(false);
 
-                    if (response.error) {
-                        console.log(response.message);
-                    } else {
-                        setIsSettings(false);
-                        setUpdateSettingsData((prev) => ({...prev, title: response.message.title}));
-                        setUpdateSettingsData((prev) => ({...prev, id: response.message.id}));
-                        setSettingsData(response.message);
-                    }
-                } catch (error) {
-                    console.log("Error: ", error);
+                if (response.error) {
+                    console.log(response.message);
+                } else {
+                    setIsSettings(false);
+                    setUpdateSettingsData((prev) => ({ ...prev, title: response.message.title }));
+                    setUpdateSettingsData((prev) => ({ ...prev, id: response.message.id }));
+                    setSettingsData(response.message);
                 }
-            };
-            fetcHSettings();
-        }
-    }, [userId, settingsMount]);
+            } catch (error) {
+                console.log("Error: ", error);
+            }
+        };
+        fetcHSettings();
+    }, [settingsMount]);
 
     return (
         <AdminContext.Provider
