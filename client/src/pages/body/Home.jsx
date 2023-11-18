@@ -45,12 +45,12 @@ function Home() {
     isAddAddress, setIsAddAddress, addressData, setAddressData, handleAddAddress, isMyAddress, setIsMyAddress, myAddressList, placeOrderData, setPlaceOrderData,
     isPlaceOrder, setIsPlaceOrder, handlePlaceOrder, isCart, setIsCart, handleDeleteCart, isMyOrder, setIsMyOrder, myOrdersList, myNotifications,
     feedbackData, setFeedbackData, handleAddFeedback, handleButtonFeedback, isRateMe, setIsRateMe, isSelectProduct, setIsSelectProduct, commentsList,
-    isEditProfileName, setIsEditProfileName, names, setNames, handleEditProfileName, eachComments, checkUpdate, setCheckUpdate
+    isEditProfileName, setIsEditProfileName, names, setNames, handleEditProfileName, eachComments, checkUpdate, setCheckUpdate, handleDelete
   } = useContext(AuthContext); // require auth context
 
   const { categoryList, publicLoading, productListToSearch, homeSearch, setHomeSearch } = useContext(PublicContext);
 
-  const {settingsData} = useContext(AdminContext);
+  const { settingsData } = useContext(AdminContext);
 
   const [isErrorResponse, setIsErrorResponse] = useState(false);
 
@@ -267,8 +267,8 @@ function Home() {
       <nav className="main-header navbar navbar-expand" style={{ marginLeft: '0', background: 'none', color: 'black' }}>
         <ul className="navbar-nav">
 
-          <li className="nav-item" style={{marginTop: '-7px'}}>
-            <a className="nav-link"><img src={settingsData && `${backendUrl}/${settingsData.image}`} style={{width: '40px', height: '40px', borderRadius: '50%'}} alt="" /></a>
+          <li className="nav-item" style={{ marginTop: '-7px' }}>
+            <a className="nav-link"><img src={settingsData && `${backendUrl}/${settingsData.image}`} style={{ width: '40px', height: '40px', borderRadius: '50%' }} alt="" /></a>
           </li>
 
           <li className="nav-item d-sm-inline-block" style={{ marginLeft: '-20px' }}>
@@ -282,7 +282,7 @@ function Home() {
           {isLogin && (
             <li className="nav-item dropdown">
               <a className="nav-link" data-toggle="dropdown" href="#">
-                <i className="far fa-bell" style={{color: 'black'}}/>
+                <i className="far fa-bell" style={{ color: 'black' }} />
                 <span className="badge badge-warning navbar-badge">{myNotifications?.length === 0 ? '' : myNotifications?.length}</span>
               </a>
               <div className="dropdown-menu dropdown-menu-lg dropdown-menu-right notificationAlign">
@@ -320,7 +320,7 @@ function Home() {
           {isLogin && (
             <li className="nav-item dropdown no-arrow">
               <a className="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span className="mr-2 d-none d-lg-inline text-gray-600 small" style={{color: 'black'}}>{userCredentials && `${userCredentials.first_name} ${userCredentials.middle_name} ${userCredentials.last_name}`}</span>
+                <span className="mr-2 d-none d-lg-inline text-gray-600 small" style={{ color: 'black' }}>{userCredentials && `${userCredentials.first_name} ${userCredentials.middle_name} ${userCredentials.last_name}`}</span>
                 <img style={{ width: 25, height: 25 }} className="img-profile rounded-circle" src={userCredentials && userCredentials.given_image ? `${backendUrl}/${userCredentials.given_image}` : givenImage} />
               </a>
 
@@ -335,9 +335,12 @@ function Home() {
                 )}
                 {userCredentials?.user_type === "Customer" && (
                   <>
-                    <a className="dropdown-item" data-toggle="modal" style={{ cursor: 'pointer' }} onClick={() => setIsMyAddress(true)}><i className="fa-sm fa-fw mr-2 text-gray-400" ><FaAddressCard size={18} style={{ color: 'black', marginTop: '-3px' }} /></i>
+                    <a className="dropdown-item" data-toggle="modal" style={{ cursor: 'pointer' }} onClick={() => navigate('address')}><i className="fa-sm fa-fw mr-2 text-gray-400" ><FaAddressCard size={18} style={{ color: 'black', marginTop: '-3px' }} /></i>
                       My Address
                     </a>
+                    {/* <a className="dropdown-item" data-toggle="modal" style={{ cursor: 'pointer' }} onClick={() => setIsMyAddress(true)}><i className="fa-sm fa-fw mr-2 text-gray-400" ><FaAddressCard size={18} style={{ color: 'black', marginTop: '-3px' }} /></i>
+                      My Address
+                    </a> */}
                     <a className="dropdown-item" data-toggle="modal" style={{ cursor: 'pointer' }} onClick={() => setIsMyOrder(true)}><i className="fa-sm fa-fw mr-2 text-gray-400" ><FcShipped size={18} style={{ color: 'black', marginTop: '-3px' }} /></i>
                       My Orders
                     </a>
@@ -357,7 +360,7 @@ function Home() {
           {!isLogin && (
             <li className="nav-item dropdown" onClick={(e) => { e.stopPropagation(); navigate('/login') }}>
               <a className="nav-link" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span className="mr-2 d-none d-lg-inline text-gray-600 small" style={{color: 'black'}}>Login/Register</span>
+                <span className="mr-2 d-none d-lg-inline text-gray-600 small" style={{ color: 'black' }}>Login/Register</span>
                 <BsPersonCircle style={{ cursor: 'pointer' }} size={20} />
               </a>
             </li>
@@ -398,10 +401,10 @@ function Home() {
                     <span style={{ textDecoration: 'line-through', color: '#d2d2d2' }}>₱{item.discount}</span>
                     <span> ₱{item.prize}</span>
                   </div>
-                  <span style={{color: 'red', fontSize: '15px'}}>Stock: ₱{item.discount}</span>
+                  <span style={{ color: 'red', fontSize: '15px' }}>Stock: ₱{item.discount}</span>
                 </div>
 
-                <ul style={{ display: 'flex', listStyle: 'none', margin: '10px 0 10px -40px', fontSize: '18px'}}>
+                <ul style={{ display: 'flex', listStyle: 'none', margin: '10px 0 10px -40px', fontSize: '18px' }}>
                   <li><i className={item.ratings > 0 ? 'fa fa-star checked' : 'fa fa-star'}></i></li>
                   <li><i className={item.ratings > 1 ? 'fa fa-star checked' : 'fa fa-star'}></i></li>
                   <li><i className={item.ratings > 2 ? 'fa fa-star checked' : 'fa fa-star'}></i></li>
@@ -597,8 +600,11 @@ function Home() {
               <div className="modal-close" onClick={() => setIsProductClick(false)} id='comments'>
                 <AiOutlineCloseCircle size={30} />
               </div>
-              <div style={{ fontWeight: 'bold' }}>
-                <span>{eachProductInfo?.name}</span>
+              <div style={{ textAlign: 'center' }}>
+                <img src={`${backendUrl}/${eachProductInfo?.image}`} style={{ width: '130px', height: '130px', borderRadius: '50%' }} alt="" />
+              </div>
+              <div style={{ textAlign: 'center', fontSize: '20px', marginBottom: '15px' }}>
+                <span>{eachProductInfo.name}</span>
               </div>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '4px', fontSize: '13px', color: 'red' }}>
                 <span>Stock: {eachProductInfo?.stock}</span>
@@ -684,111 +690,6 @@ function Home() {
             </div>
           </div>
 
-        </div>
-      )}
-
-      {/* My Address */}
-      {isMyAddress && (
-        <div className="popup">
-          <div className="popup-body student-body" onClick={(e) => e.stopPropagation()} style={{ top: '50%', left: '50%', transform: 'translate(-50%, -50%)', borderRadius: '5px', animation: isMyAddress ? 'animateCenter 0.3s linear' : 'closeAnimateCenter 0.3s linear' }}>
-
-            <div className="popup-edit" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <span>My Address</span>
-              <div className="modal-close" onClick={() => setIsMyAddress(false)}>
-                <AiOutlineCloseCircle size={30} />
-              </div>
-            </div>
-
-
-            <hr />
-            <div className="form-div" style={{ fontSize: '12px' }} >
-              <table className="table table-hover table-striped">
-                <thead>
-                  <tr>
-                    <th>Address</th>
-                    <th>Land Mark</th>
-                    <th>Country</th>
-                    <th>Zip Code</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {myAddressList && myAddressList.length === 0 ? (
-                    <div style={{ position: '', width: '90%', color: 'red', margin: '15px 0px 0px 10px', fontSize: '14px' }}>
-                      <span>No Address!</span>
-                    </div>
-                  ) : (
-                    myAddressList && myAddressList.map((item, index) => (
-                      <tr key={item.id}>
-                        <td>{`${item.street}. ${item.barangay} ${item.municipality}, ${item.province}`}</td>
-                        <td>{`${item.land_mark}`}</td>
-                        <td>{`${item.country}`}</td>
-                        <td>{item.zip_code}</td>
-                      </tr>
-                    ))
-                  )}
-                </tbody>
-              </table>
-            </div>
-            <div>
-              <button className='btn btn-primary' onClick={() => setIsAddAddress(true)} style={{ fontSize: '15px' }}>Add New Address</button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Add Address */}
-      {isAddAddress && (
-        <div className="popup" style={{ fontSize: '15px' }}>
-          <div className="popup-body student-body" onClick={(e) => e.stopPropagation()} style={{ top: '50%', left: '50%', transform: 'translate(-50%, -50%)', borderRadius: '5px', animation: isAddAddress ? 'animateCenter 0.3s linear' : 'closeAnimateCenter 0.3s linear' }}>
-
-            <div className="popup-edit">
-              <span style={{ fontWeight: 'bold' }}>Add Address</span>
-            </div>
-
-            <hr />
-
-            <form onSubmit={handleAddAddress}>
-              <div className='form-div'>
-                <label htmlFor="">Street</label>
-                <input type="text" className='form-control' value={addressData.street} onChange={(e) => setAddressData((prev) => ({ ...prev, street: e.target.value }))} placeholder='e.g. Sta. Cruz' required />
-              </div>
-
-              <div style={{ marginTop: '15px' }}>
-                <label htmlFor="">Village (Barangay)</label>
-                <input type="text" className='form-control' value={addressData.barangay} onChange={(e) => setAddressData((prev) => ({ ...prev, barangay: e.target.value }))} placeholder='e.g. Libertad' required />
-              </div>
-
-              <div style={{ marginTop: '15px' }}>
-                <label htmlFor="">Municipality/City</label>
-                <input type="text" className='form-control' value={addressData.municipality} onChange={(e) => setAddressData((prev) => ({ ...prev, municipality: e.target.value }))} placeholder='e.g. Dapitan City' required />
-              </div>
-
-              <div style={{ marginTop: '15px' }}>
-                <label htmlFor="">Province/State</label>
-                <input type="text" className='form-control' value={addressData.province} onChange={(e) => setAddressData((prev) => ({ ...prev, province: e.target.value }))} placeholder='e.g. Zamboanga Del Norte' required />
-              </div>
-
-              <div style={{ marginTop: '15px' }}>
-                <label htmlFor="">Postal Code/Zip Code</label>
-                <input type="number" className='form-control' value={addressData.zipCode} onChange={(e) => setAddressData((prev) => ({ ...prev, zipCode: e.target.value }))} placeholder='Zip Code' required />
-              </div>
-
-              <div style={{ marginTop: '15px' }}>
-                <label htmlFor="">Country</label>
-                <input type="text" className='form-control' value={addressData.country} onChange={(e) => setAddressData((prev) => ({ ...prev, country: e.target.value }))} placeholder='e.g. Philippines' required />
-              </div>
-
-              <div style={{ marginTop: '15px' }}>
-                <label htmlFor="">Land Mark (Additional Address Info)</label>
-                <input type="text" className='form-control' value={addressData.landMark} onChange={(e) => setAddressData((prev) => ({ ...prev, landMark: e.target.value }))} placeholder='e.g. Inside Rice Mailing Corporation' required />
-              </div>
-
-              <div style={{ justifyContent: 'space-between', marginTop: '25px', display: 'flex' }}>
-                <button className='btn btn-danger' type='button' style={{ width: '80px' }} onClick={() => setIsAddAddress(false)}>Cancel</button>
-                <button className='btn btn-primary' type='submit' style={{ width: '80px' }}>Save</button>
-              </div>
-            </form>
-          </div>
         </div>
       )}
 
@@ -879,8 +780,10 @@ function Home() {
 
               {placeOrderData.eachAmount?.map((item, index) => (
                 <div key={index} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '13px', marginTop: '10px' }}>
-                  <span>{placeOrderData.productInfo[index]}</span>
-                  <span>Item: {placeOrderData.quantity[index]}</span>
+                  <div style={{display: 'flex', gap: '5px'}}>
+                    <span>{placeOrderData.productInfo[index]}</span>
+                    <span>(x{placeOrderData.quantity[index]})</span>
+                  </div>
                   <span>₱{placeOrderData.eachAmount[index]}</span>
                 </div>
               ))}
@@ -1023,7 +926,7 @@ function Home() {
                               <div style={{ display: 'flex', gap: '5px' }}>
                                 <a href="#" onClick={() => { setCheckUpdate(true); setFeedbackData((prev) => ({ ...prev, ratings: item.ratings })); setFeedbackData((prev) => ({ ...prev, productId: item.product_id })); setFeedbackData((prev) => ({ ...prev, comments: item.comments })); setFeedbackData((prev) => ({ ...prev, updateCommentId: item.id })); }}><span className="fa fa-edit text-primary" /> </a>
                                 <div className="dropdown-divider" />
-                                <a href="#" ><span className="fa fa-trash text-danger" /> </a>
+                                <a href="#" onClick={() => handleDelete(item.id)}><span className="fa fa-trash text-danger" /> </a>
                               </div>
                             </td>
                           </tr>
