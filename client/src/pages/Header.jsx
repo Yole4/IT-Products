@@ -42,11 +42,11 @@ function Header() {
 
     return (
         <div>
-            <nav className="main-header navbar navbar-expand" style={{ background: 'none', color: 'black' }}>
+            <nav className="main-header navbar navbar-expand" style={{ background: 'none', color: '#fff' }}>
                 {/* Left navbar links */}
                 <ul className="navbar-nav">
                     <li className="nav-item">
-                        <a className="nav-link" data-widget="pushmenu" href="#" role="button"><i className="fas fa-bars" style={{color: 'black'}} /></a>
+                        <a className="nav-link" data-widget="pushmenu" href="#" role="button"><i className="fas fa-bars" style={{color: '#fff'}} /></a>
                     </li>
 
                     <li className="nav-item d-sm-inline-block" style={{ marginLeft: '-20px' }}>
@@ -70,7 +70,7 @@ function Header() {
                     {/* // ================================================================= NOTIFICATION =============================================================================== */}
                     <li className="nav-item dropdown">
                         <a className="nav-link" data-toggle="dropdown" href="#">
-                            <i className="far fa-bell" style={{color: 'black'}} />
+                            <i className="far fa-bell" style={{color: '#fff'}} />
                             <span className="badge badge-warning navbar-badge">{myNotifications?.length === 0 ? '' : myNotifications?.length}</span>
                         </a>
                         <div className="dropdown-menu dropdown-menu-lg dropdown-menu-right notificationAlign">
@@ -98,7 +98,7 @@ function Header() {
                     {/* Admin Profile */}
                     <li className="nav-item dropdown no-arrow">
                         <a className="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span className="mr-2 d-none d-lg-inline text-gray-600 small" style={{color: 'black'}} >{`${userCredentials.first_name} ${userCredentials.middle_name} ${userCredentials.last_name}`}</span>
+                            <span className="mr-2 d-none d-lg-inline text-gray-600 small" style={{color: '#fff'}} >{`${userCredentials.first_name} ${userCredentials.middle_name} ${userCredentials.last_name}`}</span>
                             <img style={{ width: 25, height: 25 }} className="img-profile rounded-circle" src={userCredentials && `${backendUrl}/${userCredentials.given_image}`} />
                         </a>
 

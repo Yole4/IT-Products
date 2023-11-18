@@ -7,8 +7,8 @@ import { RiNewspaperLine } from "react-icons/ri";
 import { FiArchive } from "react-icons/fi";
 import { IoSettingsOutline } from "react-icons/io5";
 import { MdDateRange } from "react-icons/md";
-import { FcShipped } from "react-icons/fc";
 import { FaBoxesStacked } from "react-icons/fa6";
+import { MdLocalShipping } from "react-icons/md";
 
 // images
 import givenImage from '../assets/images/given image.png';
@@ -28,7 +28,6 @@ function SideBar() {
     return (
         <div>
             <aside className="main-sidebar sidebar-dark-primary elevation-4">
-                <i className='fas fa-times close-button' data-widget="pushmenu" style={{ position: 'absolute', top: '17px', right: '20px', fontSize: '27px' }} href="#" role="button"></i>
                 {/* Brand Logo */}
                 <span className="brand-link span-cursor" style={{ width: '190px' }}>
                     <img src={settingsData ? `${backendUrl}/${settingsData.image}` : logo} alt="AdminLTE Logo" className="brand-image img-circle elevation-3" style={{ opacity: '.8' }} />
@@ -60,7 +59,7 @@ function SideBar() {
 
                             <li className="nav-item dropdown" style={{ cursor: 'pointer' }} onClick={() => navigate('/orders')}>
                                 <a className={location.pathname === '/orders' ? 'nav-link nav-home hover-side' : 'nav-link nav-home'}>
-                                    <i className="nav-icon"><FcShipped /></i>
+                                    <i className="nav-icon"><MdLocalShipping /></i>
                                     <p style={{ marginLeft: '10px' }}>
                                         Orders
                                     </p>

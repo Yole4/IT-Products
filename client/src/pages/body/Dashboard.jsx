@@ -8,8 +8,8 @@ import { FiArchive } from "react-icons/fi";
 import { TbArchiveOff } from "react-icons/tb";
 import { useNavigate } from 'react-router-dom';
 import { MdDateRange } from "react-icons/md";
-import { FcShipped } from "react-icons/fc";
 import { FaBoxesStacked } from "react-icons/fa6";
+import { MdLocalShipping } from "react-icons/md";
 
 // require header and sidebar
 import SideBar from '../SideBar';
@@ -50,10 +50,10 @@ function Dashboard() {
                     </div>
                 </div>
 
-                <div style={{ marginLeft: '20px', textAlign: 'center', marginBottom: '20px' }}>
+                {/* <div style={{ marginLeft: '20px', textAlign: 'center', marginBottom: '20px' }}>
                     <h1 className="m-0">Admin Dashboard</h1>
                     <hr />
-                </div>
+                </div> */}
 
                 <section className="content">
                     <div className="container-fluid">
@@ -77,7 +77,7 @@ function Dashboard() {
                                         <p>Pending Orders</p>
                                     </div>
                                     <div className="icon">
-                                        <i><FcShipped /></i>
+                                        <i><MdLocalShipping /></i>
                                     </div>
                                     <a href="#" className="small-box-footer" onClick={() => navigate('/orders')}>More info <i className="fas fa-arrow-circle-right" /></a>
                                 </div>
@@ -89,7 +89,7 @@ function Dashboard() {
                                         <p>To Receive Orders</p>
                                     </div>
                                     <div className="icon">
-                                        <i><FcShipped /></i>
+                                        <i><MdLocalShipping /></i>
                                     </div>
                                     <a href="#" className="small-box-footer" onClick={() => navigate('/orders')}>More info <i className="fas fa-arrow-circle-right" /></a>
                                 </div>
@@ -101,7 +101,7 @@ function Dashboard() {
                                         <p>Receives Orders</p>
                                     </div>
                                     <div className="icon">
-                                        <i><FcShipped /></i>
+                                        <i><MdLocalShipping /></i>
                                     </div>
                                     <a href="#" className="small-box-footer" onClick={() => navigate('/orders')}>More info <i className="fas fa-arrow-circle-right" /></a>
                                 </div>
@@ -116,18 +116,6 @@ function Dashboard() {
                                         <i><FaBoxesStacked /></i>
                                     </div>
                                     <a href="#" className="small-box-footer" onClick={() => navigate('/products')}>More info <i className="fas fa-arrow-circle-right" /></a>
-                                </div>
-                            </div>
-                            <div className="col-lg-3 col-6">
-                                <div className="small-box bg-danger">
-                                    <div className="inner">
-                                        <h3>12</h3>
-                                        <p>Order History</p>
-                                    </div>
-                                    <div className="icon">
-                                        <i><FcShipped /></i>
-                                    </div>
-                                    <a href="#" className="small-box-footer" onClick={() => navigate('/archive-list')}>More info <i className="fas fa-arrow-circle-right" /></a>
                                 </div>
                             </div>
 
