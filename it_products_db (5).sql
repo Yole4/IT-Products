@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 17, 2023 at 08:51 AM
+-- Generation Time: Nov 19, 2023 at 04:31 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -72,18 +72,19 @@ CREATE TABLE `feedback` (
 --
 
 INSERT INTO `feedback` (`id`, `user_id`, `product_id`, `ratings`, `comments`, `is_like`, `date`, `isDelete`) VALUES
-(1, 8, 8, 7, 'just for this commentss', 0, '2023-11-12 06:14:56', 'not'),
+(1, 8, 8, 7, 'just for this commentss', 0, '2023-11-12 06:14:56', 'Deleted'),
 (2, 8, 7, 9, 'sdf', 0, '2023-11-12 06:17:47', 'not'),
-(3, 8, 8, 4, 'sdf', 0, '2023-11-12 06:22:26', 'not'),
+(3, 8, 8, 4, 'sdf', 0, '2023-11-12 06:22:26', 'Deleted'),
 (4, 8, 7, 8, 'udpated comment', 0, '2023-11-12 07:26:07', 'not'),
 (5, 8, 7, 5, 'sdf', 0, '2023-11-12 07:36:09', 'not'),
-(6, 8, 8, 1, 'sdf', 0, '2023-11-12 08:07:11', 'not'),
-(7, 8, 8, 2, 'kj', 0, '2023-11-12 08:09:38', 'not'),
-(8, 8, 8, 1, 'test', 0, '2023-11-15 22:16:14', 'not'),
-(9, 8, 8, 2, 'sssssssssss', 0, '2023-11-15 22:17:51', 'not'),
+(6, 8, 8, 1, 'sdf', 0, '2023-11-12 08:07:11', 'Deleted'),
+(7, 8, 8, 2, 'kj', 0, '2023-11-12 08:09:38', 'Deleted'),
+(8, 8, 8, 1, 'just for this comments', 0, '2023-11-15 22:16:14', 'not'),
+(9, 8, 8, 2, 'sssssssssss', 0, '2023-11-15 22:17:51', 'Deleted'),
 (10, 8, 8, 1, '1 comment', 0, '2023-11-15 22:26:33', 'not'),
-(11, 8, 8, 1, 'ss', 0, '2023-11-15 22:41:04', 'not'),
-(12, 10, 8, 5, 'other user comments', 0, '2023-11-17 00:34:54', 'not');
+(11, 8, 8, 1, 'ss', 0, '2023-11-15 22:41:04', 'Deleted'),
+(12, 10, 8, 5, 'other user comments', 0, '2023-11-17 00:34:54', 'not'),
+(13, 8, 8, 4, 'sdf', 0, '2023-11-18 07:08:32', 'not');
 
 -- --------------------------------------------------------
 
@@ -153,16 +154,24 @@ INSERT INTO `my_cart` (`id`, `user_id`, `product_id`, `quantity`, `date`, `isDel
 (50, 8, 8, 1, '2023-11-15 00:28:54', 'Deleted'),
 (51, 8, 9, 1, '2023-11-15 00:30:00', 'Deleted'),
 (52, 8, 3, 1, '2023-11-15 13:30:37', 'Deleted'),
-(53, 8, 6, 2, '2023-11-15 13:31:09', 'not'),
-(54, 8, 7, 1, '2023-11-15 13:31:38', 'not'),
+(53, 8, 6, 2, '2023-11-15 13:31:09', 'Deleted'),
+(54, 8, 7, 1, '2023-11-15 13:31:38', 'Deleted'),
 (55, 8, 3, 1, '2023-11-16 03:51:05', 'Deleted'),
 (56, 8, 2, 2, '2023-11-16 04:18:24', 'Deleted'),
 (57, 8, 3, 1, '2023-11-16 04:18:58', 'Deleted'),
-(58, 10, 7, 1, '2023-11-16 04:36:28', 'not'),
+(58, 10, 7, 1, '2023-11-16 04:36:28', 'Deleted'),
 (59, 10, 3, 2, '2023-11-16 04:48:55', 'Deleted'),
 (60, 10, 8, 1, '2023-11-16 11:32:12', 'not'),
-(61, 10, 2, 1, '2023-11-16 11:33:11', 'not'),
-(62, 10, 3, 1, '2023-11-16 11:48:07', 'not');
+(61, 10, 2, 1, '2023-11-16 11:33:11', 'Deleted'),
+(62, 10, 3, 1, '2023-11-16 11:48:07', 'Deleted'),
+(63, 8, 3, 1, '2023-11-18 11:11:07', 'Deleted'),
+(64, 8, 6, 1, '2023-11-18 11:11:56', 'Deleted'),
+(65, 8, 2, 1, '2023-11-18 11:12:30', 'Deleted'),
+(66, 8, 3, 1, '2023-11-18 11:14:27', 'Deleted'),
+(67, 8, 6, 2, '2023-11-18 11:14:40', 'Deleted'),
+(68, 8, 3, 1, '2023-11-18 11:14:52', 'Deleted'),
+(69, 8, 2, 1, '2023-11-18 11:19:28', 'not'),
+(70, 8, 3, 1, '2023-11-19 02:48:03', 'not');
 
 -- --------------------------------------------------------
 
@@ -220,7 +229,12 @@ INSERT INTO `notifications` (`id`, `user_id`, `notification_type`, `content`, `d
 (121, 1, 'Place Order', 'testing testing testing had new order!', '2023-11-16 09:41:46', '', 0, 'not'),
 (122, 1, 'Place Order', 'testing testing testing had new order!', '2023-11-17 00:26:12', '', 0, 'not'),
 (123, 10, 'Order Status', 'Your order status was updated to Received.', '2023-11-17 00:31:12', '', 0, 'not'),
-(124, 1, 'feedback', 'testing testing testing added feedback on Dell', '2023-11-17 00:34:54', '', 0, 'not');
+(124, 1, 'feedback', 'testing testing testing added feedback on Dell', '2023-11-17 00:34:54', '', 0, 'not'),
+(125, 1, 'Place Order', 'i ams test customer had new order!', '2023-11-18 06:36:54', '', 0, 'not'),
+(126, 1, 'Place Order', 'i ams test customer had new order!', '2023-11-18 07:05:48', '', 0, 'not'),
+(127, 1, 'feedback', 'i am customer added feedback on Dell', '2023-11-18 07:08:32', '', 0, 'not'),
+(128, 1, 'Place Order', 'i ams test customer had new order!', '2023-11-18 07:16:48', '', 0, 'not'),
+(129, 1, 'Place Order', 'i ams test customer had new order!', '2023-11-18 10:41:05', '', 0, 'not');
 
 -- --------------------------------------------------------
 
@@ -290,7 +304,11 @@ INSERT INTO `orders` (`id`, `user_id`, `fullname`, `product_id`, `product_info`,
 (49, 8, 'i am customer', '2,3,6,7', 'sample,sample,Lenovo,Laptop', '2,1,2,1', '0.00,0.00,32000.00,33999.00', 'Address', 'Cash on Delivery', 130, '2023-11-12 08:54:27', 'Pending', 'not', 66129),
 (50, 5, 'dsf sdf sdf', '3', 'sample', '1', '0.00', 'lsdfj. lsjdflksj lkjslfkj, lkjdflksjd', 'Cash on Delivery', 130, '2023-11-14 06:03:37', 'Pending', 'not', 130),
 (51, 10, 'testing testing testing', '3', 'sample', '2', '0.00', 'sdf. sdf sdf, sdf', 'Cash on Delivery', 130, '2023-11-16 09:41:46', 'Pending', 'not', 130),
-(52, 10, 'testing testing testing', '8', 'Dell', '1', '20000.00', 'sdf. sdf sdf, sdf', 'G-Cash', 130, '2023-11-17 00:26:12', 'Received', 'not', 20130);
+(52, 10, 'testing testing testing', '8', 'Dell', '1', '20000.00', 'sdf. sdf sdf, sdf', 'G-Cash', 130, '2023-11-17 00:26:12', 'Received', 'not', 20130),
+(53, 8, 'i ams test customer', '7', 'Laptop', '4', '135996.00', 'sdf. sdfs dsfsd, fdsfds', 'Cash on Delivery', 130, '2023-11-18 06:36:54', 'Pending', 'not', 136126),
+(54, 8, 'i ams test customer', '6', 'Lenovo', '2', '32000.00', 'sdf. sdf sdf, sdf', 'Cash on Delivery', 130, '2023-11-18 07:05:48', 'Pending', 'not', 32130),
+(55, 8, 'i ams test customer', '7', 'Laptop', '1', '33999.00', 'sdf. sdf sdf, sdf', 'Cash on Delivery', 130, '2023-11-18 07:16:48', 'Pending', 'not', 34129),
+(56, 8, 'i ams test customer', '7', 'Laptop', '1', '33999.00', 'sdf. sdf sdf, sdf', 'Cash on Delivery', 130, '2023-11-18 10:41:05', 'Pending', 'not', 34129);
 
 -- --------------------------------------------------------
 
@@ -324,10 +342,11 @@ INSERT INTO `products` (`id`, `category`, `image`, `name`, `description`, `addre
 (3, 'Computers', 'assets/product image/1699490521978_+_Ede_vZbXsAc8zpM.png', 'sample', 'description', '', 4, 0, 0, 2, 10, '2023-11-09 00:42:01', 'not'),
 (4, 'Computers', 'assets/product image/1699492425110_+_jrmsuOffice.jpeg', 'sdf', '', '', 111, 0, 0, 0, 10, '2023-11-09 01:13:45', 'Deleted'),
 (5, 'Laptop', 'assets/product image/1699498721464_+_PAGLINAWAN, SHELO562060.jpg', 'testing with prize', '20', '', 48, 10, 0, 2, 0, '2023-11-09 02:56:11', 'Deleted'),
-(6, 'Computers', 'assets/product image/1699500268440_+_1345811b-a96b-417d-892f-998e3c7b0103.png', 'Lenovo', 'OS: Windows 11, RAM: 8GB, SSD: 256GB, Proccessor: Core I5', 'Sta. Cruz, Dapitan City', 12, 16000, 2000, 2, 0, '2023-11-09 02:59:03', 'not'),
-(7, 'Laptop', 'assets/product image/1699663547176_+_uploaded_998291359696390a9611ca1eb1c3a58079b1c933.jpg', 'Laptop', 'LENOVO IDEAPAD SLIM 3I 14ITL05 81X700ERPH | CORE I3-1115G4 | 8GB RAM | 512GB SSD | PLATINUM GRAY WITH FREE LENOVO HU75, M120 PRO AND GCASH WORTH P1,000', 'Sta. Cruz Dapitan City', 11, 33999, 40000, 1, 7, '2023-11-11 00:45:47', 'not'),
+(6, 'Computers', 'assets/product image/1699500268440_+_1345811b-a96b-417d-892f-998e3c7b0103.png', 'Lenovo', 'OS: Windows 11, RAM: 8GB, SSD: 256GB, Proccessor: Core I5', 'Sta. Cruz, Dapitan City', 10, 16000, 2000, 2, 0, '2023-11-09 02:59:03', 'not'),
+(7, 'Laptop', 'assets/product image/1699663547176_+_uploaded_998291359696390a9611ca1eb1c3a58079b1c933.jpg', 'Laptop', 'LENOVO IDEAPAD SLIM 3I 14ITL05 81X700ERPH | CORE I3-1115G4 | 8GB RAM | 512GB SSD | PLATINUM GRAY WITH FREE LENOVO HU75, M120 PRO AND GCASH WORTH P1,000', 'Sta. Cruz Dapitan City', 5, 33999, 40000, 1, 7, '2023-11-11 00:45:47', 'not'),
 (8, 'Laptop', 'assets/product image/1699663877607_+_71D3y82w27L._SL1500_.jpg', 'Dell', 'Dell Inspiron 15 3525 15.6\" FHD Laptop Ryzen 7 5700U 16GB RAM/1TB SSD Win11 Carbon Black', 'Sta. Cruz Dapitan City', 0, 20000, 25000, 1, 3, '2023-11-11 00:51:17', 'not'),
-(9, 'Computers', 'assets/product image/1700008190100_+_Ede_vZbXsAc8zpM.png', 'sdf', 'sf', 'sd', 21, 123, 213, 0, 0, '2023-11-15 00:29:50', 'Deleted');
+(9, 'Computers', 'assets/product image/1700008190100_+_Ede_vZbXsAc8zpM.png', 'sdf', 'sf', 'sd', 21, 123, 213, 0, 0, '2023-11-15 00:29:50', 'Deleted'),
+(10, 'Laptop', 'assets/product image/1700324922182_+_272450932_3064229930560990_6165792002848750463_n.jpg', 'product name', 'description', 'my address', 23, 234, 32, 0, 0, '2023-11-18 16:28:42', 'not');
 
 -- --------------------------------------------------------
 
@@ -347,7 +366,7 @@ CREATE TABLE `settings` (
 --
 
 INSERT INTO `settings` (`id`, `image`, `title`, `date`) VALUES
-(1, 'assets/settings image/1700205922870_+_Ede_vZbXsAc8zpM.png', 'IT Productssdfsdfsdfsdfssssssss', '2023-11-17 06:22:12');
+(1, 'assets/settings image/1700363042430_+_272450932_3064229930560990_6165792002848750463_n.jpg', 'IT Products4sdf', '2023-11-17 06:22:12');
 
 -- --------------------------------------------------------
 
@@ -374,7 +393,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `first_name`, `middle_name`, `last_name`, `username`, `password`, `given_image`, `user_type`, `last_login`, `date`, `isDelete`) VALUES
-(1, 'sdf', 'sdf', 'sfdsss', 'admin', '240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9', 'assets/image upload/1699666882654_uploaded_998291359696390a9611ca1eb1c3a58079b1c933.jpg', 'Admin', '2023-11-06 21:47:27', '2023-11-06 21:47:27', 'not'),
+(1, 'sdf\'', 'sdf', 'sfdsss', 'admin', '240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9', 'assets/image upload/1700301865250_Ede_vZbXsAc8zpM.png', 'Admin', '2023-11-06 21:47:27', '2023-11-06 21:47:27', 'not'),
 (2, 'eloy', '', 'user', 'user1', '58be779b29eb49f5cacaf55f1c77ef9b651c61359c0a9a956c39b33842eb3920', '', '', '2023-11-07 12:41:17', '2023-11-07 12:41:17', 'not'),
 (3, 'eloy', 'the', 'user', 'user2', 'b8c871d486f147a9d99be27ab59c64c8781bb53c0472afd9804cbe00e174f648', '', 'Customer', '2023-11-07 12:46:38', '2023-11-07 12:46:38', 'Deleted'),
 (4, 'register', 'register', 'register', 'register', '87780fa5de684e87cb92b279f0bc07b14f572851e73b8943a097c1770a5f38e6', '', 'Customer', '2023-11-08 00:56:37', '2023-11-08 00:56:37', 'not'),
@@ -383,7 +402,8 @@ INSERT INTO `users` (`id`, `first_name`, `middle_name`, `last_name`, `username`,
 (7, 'testing', 'testing', 'tresting', 'testing123', '2161a35ac37e1ce9783f38d3db875af27ef02db3f6c62d455c55cc64c53a81f1', '', 'Customer', '2023-11-08 22:13:12', '2023-11-08 22:13:12', 'not'),
 (8, 'i ams', 'test', 'customer', 'customer123', 'b041c0aeb35bb0fa4aa668ca5a920b590196fdaf9a00eb852c9b7f4d123cc6d6', 'assets/image upload/1699773924100_Ede_vZbXsAc8zpM.png', 'Customer', '2023-11-11 06:54:18', '2023-11-11 06:54:18', 'not'),
 (9, 'no', '', 'internet', 'internet123', 'dfea575fa55e08c9a0466cc9d00cea092e1761d2f9dc191b094d349cdbda0037', '', 'Customer', '2023-11-11 19:04:53', '2023-11-11 19:04:53', 'not'),
-(10, 'testing', 'testing', 'testing', 'testing321', '852285e65dbd468798be3a43afe81481e2d4c8a2a45b6b71acebe4588bd6acb2', 'assets/image upload/1700127639941_download.png', 'Customer', '2023-11-16 04:36:15', '2023-11-16 04:36:15', 'not');
+(10, 'testing', 'testing', 'testing', 'testing321', '852285e65dbd468798be3a43afe81481e2d4c8a2a45b6b71acebe4588bd6acb2', 'assets/image upload/1700127639941_download.png', 'Customer', '2023-11-16 04:36:15', '2023-11-16 04:36:15', 'not'),
+(11, 'new', 'new', 'new', '', '54049413e0b782c668f8cfaffe4e96563c362beaa94238391067ac2674ceb022', '', 'Customer', '2023-11-17 10:22:14', '2023-11-17 10:22:14', 'not');
 
 -- --------------------------------------------------------
 
@@ -414,7 +434,9 @@ INSERT INTO `user_address` (`id`, `user_id`, `street`, `barangay`, `municipality
 (5, 5, 'lsdfj', 'lsjdflksj', 'lkjslfkj', 'lkjdflksjd', 123, 'kljsdf', 'klsdjf', '2023-11-09 22:26:44', 'not'),
 (6, 5, 'sdf', 'sdfs', 'dfs', 'df', 123, '123', 'f', '2023-11-09 22:35:37', 'not'),
 (7, 8, 'sdf', 'sdf', 'sdf', 'sdf', 123, 'sdf', 'sdf', '2023-11-15 13:45:03', 'not'),
-(8, 10, 'sdf', 'sdf', 'sdf', 'sdf', 23, 'dsf', 'sfd', '2023-11-16 09:41:31', 'not');
+(8, 10, 'sdf', 'sdf', 'sdf', 'sdf', 23, 'dsf', 'sfd', '2023-11-16 09:41:31', 'not'),
+(9, 8, 'sdf', 'sdf', 'sf', 'sdf', 3, 'sdf', 'sdf', '2023-11-18 02:16:36', 'not'),
+(10, 8, 'sdf', 'sdfs', 'dsfsd', 'fdsfds', 23, 'sdfsd', 'dsf', '2023-11-18 06:26:11', 'not');
 
 --
 -- Indexes for dumped tables
@@ -493,31 +515,31 @@ ALTER TABLE `categories`
 -- AUTO_INCREMENT for table `feedback`
 --
 ALTER TABLE `feedback`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `my_cart`
 --
 ALTER TABLE `my_cart`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
 
 --
 -- AUTO_INCREMENT for table `notifications`
 --
 ALTER TABLE `notifications`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=125;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=130;
 
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
 
 --
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `settings`
@@ -529,13 +551,13 @@ ALTER TABLE `settings`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `user_address`
 --
 ALTER TABLE `user_address`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- Constraints for dumped tables
